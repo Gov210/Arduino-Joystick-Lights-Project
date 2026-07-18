@@ -1,0 +1,73 @@
+//variables
+//joystick
+const int SWPin = 2;
+const int XPin = 0;
+const int YPin = 1;
+
+//lights
+const int greenPin = 4;
+const int redPin = 6;
+const int bluePin = 8;
+const int yellowPin = 10;
+
+//setup function
+void setup() {
+  //setup joystick
+  pinMode(SWPin, INPUT);
+  digitalWrite(SWPin, HIGH);
+  //setup pins
+  pinMode(greenPin,OUTPUT);
+  pinMode(redPin,OUTPUT);
+  pinMode(bluePin,OUTPUT);
+  pinMode(yellowPin,OUTPUT);
+
+  //initial pin values
+  digitalWrite(greenPin, LOW);
+  digitalWrite(redPin, LOW);
+  digitalWrite(bluePin, LOW);
+  digitalWrite(yellowPin, LOW);
+}
+
+//loop function
+void loop() {
+  //test lights
+  // digitalWrite(greenPin, HIGH);
+  // digitalWrite(redPin, HIGH);
+  // digitalWrite(bluePin, HIGH);
+  // digitalWrite(yellowPin, HIGH);
+
+  //if stick is not pressed, then only one light will turn on at a time
+  if(digitalRead(SWPin) == HIGH){
+    //green to left: 0 <= X <= 500
+    if(analogRead(XPin) >= 0 && analogRead(XPin) <= 500){
+      digitalWrite(greenPin, HIGH);
+  
+    //yellow to right: 530 <= X <= 1023
+    } else if(analogRead(XPin) >= 530 && analogRead(XPin) <= 1023) {
+      digitalWrite(yellowPin, HIGH);
+
+    //red to top: 0 <= Y <= 500
+    } else if(analogRead(YPin) >= 0 && analogRead(YPin) <= 500){
+      digitalWrite(redPin,HIGH);
+
+    //blue to bottom: 530 <= Y <= 1023
+    } else if(analogRead(YPin) >= 530 && analogRead(YPin) <= 1023){
+      digitalWrite(bluePin, HIGH);
+
+    //otherwise, all off
+    } else{
+      digitalWrite(greenPin, LOW);
+      digitalWrite(redPin, LOW);
+      digitalWrite(bluePin, LOW);
+      digitalWrite(yellowPin, LOW);
+    }
+
+    //if button is pressed down, all lights turn on
+  } else {
+      digitalWrite(greenPin, HIGH);
+      digitalWrite(redPin, HIGH);
+      digitalWrite(bluePin, HIGH);
+      digitalWrite(yellowPin, HIGH);
+  }
+
+}
